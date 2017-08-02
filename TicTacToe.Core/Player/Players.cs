@@ -1,26 +1,27 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Project.Utilities;
 
 namespace TicTacToe.Core.Player {
-    internal class Players : IEnumerable<IPlayer>, IPlayers
+    public class Players : IPlayers
     {
-        public IPlayer Current { get; }
-        private readonly IList<IPlayer> _players = new List<IPlayer>();      
+        public IPlayer Current { get; } = new UnknownPlayer();
+        private readonly LinkedList<IPlayer> _players = new LinkedList<IPlayer>();    
+        
 
         public Players() { }
         private Players(IEnumerable<IPlayer> players, IPlayer currentPlayer) {
-            _players = new List<IPlayer>(players);
+            _players = new LinkedList<IPlayer>(players);
             Current = currentPlayer;
         }
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public IEnumerator<IPlayer> GetEnumerator() => _players.GetEnumerator();
+        
+        internal int Count => _players.Count;
 
         public IPlayers Add(IPlayer player) {
-            _players.Add(player);
+            if (_players.Count >= 2)
+                throw new ArgumentException();
+
+            _players.AddLast(player);
             return new Players(_players, Current);
         }
 
@@ -32,7 +33,8 @@ namespace TicTacToe.Core.Player {
         }
 
         public IPlayers Next() {
-            var newCurrentPlayer = _players.SingleOrDefault(p => !p.Equals(Current));
+            var currentPlayerNode = _players.Find(Current) ?? _players.First;
+            var newCurrentPlayer = currentPlayerNode != null ? currentPlayerNode.NextOrFirst().Value : new UnknownPlayer();
             return new Players(_players, newCurrentPlayer);
         } 
     }

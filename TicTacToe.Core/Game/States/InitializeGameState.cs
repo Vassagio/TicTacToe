@@ -2,6 +2,7 @@
 
 namespace TicTacToe.Core.Game.States {
     public class InitializeGameState : IGameState {
+        public IGameState DeepClone() => new InitializeGameState();
         public IGameState Start() => new StartGameState();
         public IGameState Play(Action makeMove) => this;
         public IGameState CheckForWin(Func<bool> hasWinner) => this;

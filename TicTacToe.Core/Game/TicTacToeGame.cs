@@ -66,7 +66,7 @@ namespace TicTacToe.Core.Game {
         }
 
         public void Accept(IGameVisitor visitor) {
-            visitor.Execute(_board);
+            visitor.Execute(_board, _players);
         }
 
    

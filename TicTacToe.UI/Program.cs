@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using TicTacToe.Core.Game.Board.Service;
 using TicTacToe.Core.Game.Builder;
 using TicTacToe.Core.Player;
 
@@ -6,29 +7,24 @@ namespace TicTacToe.UI
 {
     public class Program
     {
-        private static void Main(string[] args)
-        {            
+        public static IContainer Container { get; set; }
 
-            var game = GameBuilder
-                .WithBoardSize(3)
-                .FirstPlayerSet(PlayerType.As().Human("Player", "X"))
-                .SecondPlayerSet(PlayerType.As().Computer("Computer", "O"))
-                .Set(StartingPlayer.As().FirstPlayer())
-                .Create();
-            
-            do
-            {
-                game.Accept(new PrintBoardVisitor());
-                game.Start();
-                game.Play();
-                game.CheckForWin();
-                game.SwitchPlayer();
-                game.Over();
-                game.NewGame();
-                game.End();
-            } while (game.StillGoing);
-            
-            Console.ReadKey();
-        }
+        private static int Main(string[] args)
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<Application>().As<IApplication>();
+            builder.RegisterType<StartingPlayerMapper>().As<IStartingPlayerMapper>();
+            builder.RegisterType<Players>().As<IPlayers>();
+            builder.RegisterType<BoardService>().As<IBoardService>();
+
+            Container = builder.Build();
+
+            using (var scope = Container.BeginLifetimeScope())
+            {                
+                scope.Resolve<IApplication>().Run();
+            }
+
+            return 0;
+        }        
     }
 }

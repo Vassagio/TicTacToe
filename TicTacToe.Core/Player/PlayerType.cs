@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace TicTacToe.Core.Player {
-    public sealed class PlayerType : IPlayerType, IPlayerTypeCreate, IEquatable<PlayerType> {
+    public sealed class PlayerType : IPlayerType, IEquatable<PlayerType> {
         private enum StatusRepresentation {
             None,
             Human,
@@ -16,23 +16,21 @@ namespace TicTacToe.Core.Player {
 
         private StatusRepresentation Representation { get; }
 
-        private readonly IPlayer _player;
+        public IPlayer Player { get; }
 
         private PlayerType(StatusRepresentation represenation, IPlayer player) {
             Representation = represenation;
-            _player = player;
+            Player = player;
         }
 
-        public bool Equals(PlayerType other) => other != null && Representation == other.Representation;
+        public bool Equals(PlayerType other) => other != null && Representation == other.Representation && Player.Equals(other.Player);
 
-        public IPlayerTypeCreate Human(string name, string symbol) => new PlayerType(StatusRepresentation.Human, new HumanPlayer(name, symbol));
+        public PlayerType Human(string name, string symbol) => new PlayerType(StatusRepresentation.Human, new HumanPlayer(name, symbol));
 
-        public IPlayerTypeCreate Computer(string name, string symbol) => new PlayerType(StatusRepresentation.Computer, new ComputerPlayer(name, symbol));
-
-        public IPlayer Create() => _player;
+        public PlayerType Computer(string name, string symbol) => new PlayerType(StatusRepresentation.Computer, new ComputerPlayer(name, symbol));        
 
         public override bool Equals(object obj) => Equals(obj as PlayerType);
 
-        public override int GetHashCode() => (int) Representation;
+        public override int GetHashCode() => Representation.GetHashCode();
     }
 }

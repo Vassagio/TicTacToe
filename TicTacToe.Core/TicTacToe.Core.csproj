@@ -40,8 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Board\IBoard.cs" />
+    <Compile Include="Game\Board\Service\BoardService.cs" />
+    <Compile Include="Game\Board\Service\IBoardService.cs" />
     <Compile Include="Game\Board\TicTacToeBoard.cs" />
     <Compile Include="Game\Board\Tile\EmptyTile.cs" />
+    <Compile Include="Game\Builder\IGameBuilderSetSize.cs" />
+    <Compile Include="Game\Builder\IStartingPlayerMapper.cs" />
+    <Compile Include="Game\Builder\StartingPlayerMapper.cs" />
     <Compile Include="Game\TicTacToeGame.cs" />
     <Compile Include="Game\States\CheckForWinGameState.cs" />
     <Compile Include="Game\States\EndGameState.cs" />
@@ -64,6 +70,7 @@
     <Compile Include="Player\IPlayers.cs" />
     <Compile Include="Player\IPlayerType.cs" />
     <Compile Include="Player\IPlayerTypeCreate.cs" />
+    <Compile Include="Player\IStartingPlayer.cs" />
     <Compile Include="Player\Players.cs" />
     <Compile Include="Player\PlayerType.cs" />
     <Compile Include="Player\StartingPlayer.cs" />
@@ -77,6 +84,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game\Board\Tile\OccupiedTile.cs" />
     <Compile Include="Player\UnknownPlayer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Project.Utilities\Project.Utilities.csproj">
+      <Project>{447fb026-ddc1-4181-a7d5-2788a75155de}</Project>
+      <Name>Project.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
