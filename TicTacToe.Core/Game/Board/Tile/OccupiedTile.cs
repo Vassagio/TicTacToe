@@ -7,7 +7,7 @@ namespace TicTacToe.Core.Game.Board.Tile {
     {
         public int Position { get; }
         public ICoordinate Coordinate { get; }
-        public IPlayer Player { get; private set; }
+        public IPlayer Player { get; private set; } = new UnknownPlayer();
         
         public OccupiedTile(int position, ICoordinate coordinate) {
             Position = position;
@@ -18,42 +18,13 @@ namespace TicTacToe.Core.Game.Board.Tile {
             Player = player
         };
 
-        public bool Equals(OccupiedTile other) {
-            if (ReferenceEquals(null, other))
-                return false;
-            if (ReferenceEquals(this, other))
-                return true;
-            return Position == other.Position && Coordinate.Equals(other.Coordinate) && Equals(Player, other.Player);
-        }
+        public bool Equals(OccupiedTile other) => other != null && Position == other.Position && Equals(Coordinate, other.Coordinate);
 
-        public override bool Equals(object obj) {
-            if (ReferenceEquals(null, obj))
-                return false;
-            if (ReferenceEquals(this, obj))
-                return true;
-            if (obj.GetType() != GetType())
-                return false;
-            return Equals((OccupiedTile) obj);
-        }
+        public override bool Equals(object obj) => !ReferenceEquals(obj, null) && Equals(obj as OccupiedTile);
 
-        public override int GetHashCode() {
-            unchecked {
-                var hashCode = Position;
-                hashCode = (hashCode * 397) ^ Coordinate.GetHashCode();
-                hashCode = (hashCode * 397) ^ (Player != null ? Player.GetHashCode() : 0);
-                return hashCode;
-            }
-        }
+        public override int GetHashCode() => (Position.GetHashCode() * 397) ^ (Coordinate.GetHashCode() * 397);
 
-        public static bool operator ==(OccupiedTile a, OccupiedTile b) {
-            if (ReferenceEquals(null, a))
-                return false;
-            if (ReferenceEquals(null, b))
-                return false;
-            if (ReferenceEquals(a, b))
-                return true;
-            return a.Position == b.Position && a.Coordinate.Equals(b.Coordinate) && Equals(a.Player, b.Player);
-        }
+        public static bool operator ==(OccupiedTile a, OccupiedTile b) => ReferenceEquals(a, null) && ReferenceEquals(b, null) || !ReferenceEquals(a, null) && a.Equals(b);
 
         public static bool operator !=(OccupiedTile a, OccupiedTile b) => !(a == b);
     }

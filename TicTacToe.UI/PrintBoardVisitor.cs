@@ -1,14 +1,15 @@
 using System;
-using TicTacToe.Core;
 using TicTacToe.Core.Game.Board;
 using TicTacToe.Core.Game.Visitor;
+using TicTacToe.Core.Player;
 
 namespace TicTacToe.UI {
     internal class PrintBoardVisitor : IGameVisitor
     {
-        public void Execute(TicTacToeBoard board)
+        public void Execute(IBoard board, IPlayers players)
         {
             const string BORDER = "|-----|-----|-----|";
+            Console.Clear();
             Console.WriteLine(BORDER);
             for (var x = 1; x <= board.Size; x++) {
                 Console.Write("|");
@@ -18,8 +19,9 @@ namespace TicTacToe.UI {
                     Console.Write("|");
                 }
                 Console.WriteLine();
-                Console.WriteLine(BORDER);
+                Console.WriteLine(BORDER);                
             }
+            Console.ReadKey();
         }
     }
 }

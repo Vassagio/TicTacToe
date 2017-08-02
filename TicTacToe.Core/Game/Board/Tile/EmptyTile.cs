@@ -2,7 +2,7 @@
 using TicTacToe.Core.Player;
 
 namespace TicTacToe.Core.Game.Board.Tile {
-    internal class EmptyTile : ITile {
+    public class EmptyTile : ITile {
         public IPlayer Player => new UnknownPlayer();
         public int Position { get; }
         public ICoordinate Coordinate { get; }

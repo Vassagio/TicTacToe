@@ -1,8 +1,8 @@
 using System;
 
 namespace TicTacToe.Core.Game.States {
-    internal class EndGameState : IGameState
-    {
+    internal class EndGameState : IGameState {
+        public IGameState DeepClone() => new EndGameState();
         public IGameState Start() => this;
         public IGameState Play(Action makeMove) => this;
         public IGameState CheckForWin(Func<bool> hasWinner) => this;

@@ -1,26 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TicTacToe.Core.Game.Board.Service;
 using TicTacToe.Core.Game.Board.Tile;
 using TicTacToe.Core.Game.Board.Tile.Coordinate;
 using TicTacToe.Core.Player;
 
 namespace TicTacToe.Core.Game.Board {
-    public class TicTacToeBoard: IReadOnlyList<ITile> {
+    public class TicTacToeBoard : IReadOnlyList<ITile>, IBoard
+    {
         private readonly List<ITile> _tiles;
         public int Size { get; }
 
-        public static TicTacToeBoard Initialize(int size) {
-            var tiles = new List<ITile>();
-            for (var x = 1; x <= size; x++)
-            {
-                for (var y = 1; y <= size; y++)
-                {
-                    var coordinate = new AvailableCoordinate(x, y);
-                    var tile = new EmptyTile(tiles.Count + 1, coordinate);
-                    tiles.Add(tile);
-                }
-            }
+        public static TicTacToeBoard Initialize(int size, IBoardService boardService) {
+            var tiles = boardService.GenerateEmptyTilesWithAvailableCoordinates(size);
             return new TicTacToeBoard(size, tiles);
         }        
 

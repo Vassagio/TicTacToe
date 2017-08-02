@@ -1,33 +1,43 @@
-﻿using System.Collections.Generic;
-using TicTacToe.Core.Game.Board;
+﻿using TicTacToe.Core.Game.Board;
+using TicTacToe.Core.Game.Board.Service;
 using TicTacToe.Core.Game.Service;
 using TicTacToe.Core.Player;
 
 namespace TicTacToe.Core.Game.Builder {
-    public class GameBuilder : IGameBuilder, IGameBuilderSetFirstPlayer, IGameBuilderSetSecondPlayer, IGameBuilderSetStartingPlayer {
-        public static IGameBuilderSetFirstPlayer WithBoardSize(int size) => new GameBuilder(size);
-        private readonly int _size;
-        private readonly Dictionary<IStartingPlayer, IPlayer> _startingPlayerMapper = new Dictionary<IStartingPlayer, IPlayer>();
-        private IPlayers _players = new Players();
+    public class GameBuilder : IGameBuilder, IGameBuilderSetSize, IGameBuilderSetFirstPlayer, IGameBuilderSetSecondPlayer, IGameBuilderSetStartingPlayer {
+        public static IGameBuilderSetSize Initialize(IStartingPlayerMapper startingPlayerMapper, IPlayers players, IBoardService boardService) => new GameBuilder(startingPlayerMapper, players, boardService);        
+        private int _size;
+        private IStartingPlayerMapper _startingPlayerMapper;
+        private IPlayers _players;
+        private readonly IBoardService _boardService;
 
-        private GameBuilder(int size) => _size = size;
+        private GameBuilder(IStartingPlayerMapper startingPlayerMapper, IPlayers players, IBoardService boardService) {
+            _startingPlayerMapper = startingPlayerMapper;
+            _players = players;
+            _boardService = boardService;
+        } 
 
-        public TicTacToeGame Create() {
-            var board = TicTacToeBoard.Initialize(_size);
+        public TicTacToeGame Build() {
+            var board = TicTacToeBoard.Initialize(_size, _boardService);
             return new TicTacToeGame(board, _players, new GameService());
         }
 
-        public IGameBuilderSetSecondPlayer FirstPlayerSet(IPlayerTypeCreate playerType) {
-            var player = playerType.Create();
-            _players = _players.Add(player);
-            _startingPlayerMapper.Add(StartingPlayer.As().FirstPlayer(), player);
+        public IGameBuilderSetFirstPlayer WithBoardSize(int size) {
+            _size = size;
             return this;
         }
 
-        public IGameBuilderSetStartingPlayer SecondPlayerSet(IPlayerTypeCreate playerType) {
-            var player = playerType.Create();
+        public IGameBuilderSetSecondPlayer FirstPlayerSet(IPlayerType playerType) {
+            var player = playerType.Player;
             _players = _players.Add(player);
-            _startingPlayerMapper.Add(StartingPlayer.As().SecondPlayer(), player);
+            _startingPlayerMapper = _startingPlayerMapper.Add(StartingPlayer.As().FirstPlayer(), player);
+            return this;
+        }
+
+        public IGameBuilderSetStartingPlayer SecondPlayerSet(IPlayerType playerType) {
+            var player = playerType.Player;
+            _players = _players.Add(player);
+            _startingPlayerMapper = _startingPlayerMapper.Add(StartingPlayer.As().SecondPlayer(), player);
             return this;
         }
 

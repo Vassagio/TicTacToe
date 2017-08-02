@@ -31,11 +31,5 @@ namespace TicTacToe.Core.Player
 
         public override int GetHashCode() => (int)Representation;
     }
-
-    public interface IStartingPlayer
-    {
-        StartingPlayer FirstPlayer();
-        StartingPlayer SecondPlayer();
-    }
 }
 
