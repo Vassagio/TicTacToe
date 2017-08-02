@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7CAF2A06-EA4F-49EE-8DAD-D3770DF81F14}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TicTacToe.Core</RootNamespace>
+    <AssemblyName>TicTacToe.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Board\TicTacToeBoard.cs" />
+    <Compile Include="Game\Board\Tile\EmptyTile.cs" />
+    <Compile Include="Game\TicTacToeGame.cs" />
+    <Compile Include="Game\States\CheckForWinGameState.cs" />
+    <Compile Include="Game\States\EndGameState.cs" />
+    <Compile Include="Game\States\IGameState.cs" />
+    <Compile Include="Game\States\InitializeGameState.cs" />
+    <Compile Include="Game\States\PlayAgainGameState.cs" />
+    <Compile Include="Game\States\PlayGameState.cs" />
+    <Compile Include="Game\States\OverGameState.cs" />
+    <Compile Include="Game\States\StartGameState.cs" />
+    <Compile Include="Game\States\SwitchPlayerGameState.cs" />
+    <Compile Include="Game\Builder\IGameBuilder.cs" />
+    <Compile Include="Game\Builder\IGameBuilderSetFirstPlayer.cs" />
+    <Compile Include="Game\Builder\IGameBuilderSetStartingPlayer.cs" />
+    <Compile Include="Game\Builder\IGameBuilderSetSecondPlayer.cs" />
+    <Compile Include="Game\Service\IGameService.cs" />
+    <Compile Include="Game\Board\Tile\Coordinate\AvailableCoordinate.cs" />
+    <Compile Include="Game\Builder\GameBuilder.cs" />
+    <Compile Include="Player\ComputerPlayer.cs" />
+    <Compile Include="Player\HumanPlayer.cs" />
+    <Compile Include="Player\IPlayers.cs" />
+    <Compile Include="Player\IPlayerType.cs" />
+    <Compile Include="Player\IPlayerTypeCreate.cs" />
+    <Compile Include="Player\Players.cs" />
+    <Compile Include="Player\PlayerType.cs" />
+    <Compile Include="Player\StartingPlayer.cs" />
+    <Compile Include="Game\Visitor\IGameVisitor.cs" />
+    <Compile Include="Game\Board\Tile\Coordinate\ICoordinate.cs" />
+    <Compile Include="Player\IPlayer.cs" />
+    <Compile Include="Game\Board\Tile\ITile.cs" />
+    <Compile Include="Game\Board\Tile\Coordinate\NoCoordinate.cs" />
+    <Compile Include="Game\Board\Tile\OutOfBoundsTile.cs" />
+    <Compile Include="Player\BasePlayer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Game\Board\Tile\OccupiedTile.cs" />
+    <Compile Include="Player\UnknownPlayer.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
