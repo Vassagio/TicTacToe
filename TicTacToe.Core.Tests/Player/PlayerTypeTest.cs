@@ -1,4 +1,5 @@
 ﻿using Test.Utilities;
+using Test.Utilities.ValueType;
 using TicTacToe.Core.Player;
 using Xunit;
 
@@ -68,73 +69,54 @@ namespace TicTacToe.Core.Tests.Player {
         }
 
         [Fact]
-        public void Equal_SameHumanAreEqual() {
-            var playerType1 = BuildPlayerTypeAsHuman();
-            var playerType2 = BuildPlayerTypeAsHuman();
+        public void Human_Equalalty_Tests()
+        {
 
-            EqualityTests.TestEqualObjects(playerType1, playerType2);
+            const string NAME = "Human 1";
+            const string DIFFERENT_NAME = "Human 2";
+            const string SYMBOL = "X";
+            const string DIFFERENT_SYMBOL = "O";
+
+            var player1 = BuildPlayerTypeAsHuman(NAME, SYMBOL);
+            var player2 = BuildPlayerTypeAsHuman(NAME, SYMBOL);
+            var player3 = BuildPlayerTypeAsHuman(DIFFERENT_NAME, SYMBOL);
+            var player4 = BuildPlayerTypeAsHuman(NAME, DIFFERENT_SYMBOL);
+            var player5 = BuildPlayerTypeAsComputer(NAME, SYMBOL);
+
+            EqualityTests.For(player1)
+                         .EqualTo(player1)
+                         .EqualTo(player2)
+                         .NotEqualTo(player3, "different name")
+                         .NotEqualTo(player4, "different symbol")
+                         .NotEqualTo(player5, "different type")
+                         .Assert();
         }
 
         [Fact]
-        public void Equal_HumansWithDifferentNameAreNotEqual()
+        public void Computer_Equalalty_Tests()
         {
-            var playerType1 = BuildPlayerTypeAsHuman("Human 1");
-            var playerType2 = BuildPlayerTypeAsHuman("Human 2");
 
-            EqualityTests.TestUnequalObjects(playerType1, playerType2);
+            const string NAME = "Computer 1";
+            const string DIFFERENT_NAME = "Computer 2";
+            const string SYMBOL = "X";
+            const string DIFFERENT_SYMBOL = "O";
+
+            var player1 = BuildPlayerTypeAsComputer(NAME, SYMBOL);
+            var player2 = BuildPlayerTypeAsComputer(NAME, SYMBOL);
+            var player3 = BuildPlayerTypeAsComputer(DIFFERENT_NAME, SYMBOL);
+            var player4 = BuildPlayerTypeAsComputer(NAME, DIFFERENT_SYMBOL);
+            var player5 = BuildPlayerTypeAsHuman(NAME, SYMBOL);
+
+            EqualityTests.For(player1)
+                         .EqualTo(player1)
+                         .EqualTo(player2)
+                         .NotEqualTo(player3, "different name")
+                         .NotEqualTo(player4, "different symbol")
+                         .NotEqualTo(player5, "different type")
+                         .Assert();
         }
 
-        [Fact]
-        public void Equal_HumansWithDifferentSymbolAreNotEqual()
-        {
-            var playerType1 = BuildPlayerTypeAsHuman(symbol: "Symbol 1");
-            var playerType2 = BuildPlayerTypeAsHuman(symbol: "Symbol 2");
 
-            EqualityTests.TestUnequalObjects(playerType1, playerType2);
-        }
-
-        [Fact]
-        public void Equal_HumanCompareWithNull()
-        {
-            var playerType1 = BuildPlayerTypeAsHuman();            
-
-            EqualityTests.TestAgainstNull(playerType1);
-        }
-
-        [Fact]
-        public void Equal_SameComputerAreEqual()
-        {
-            var playerType1 = BuildPlayerTypeAsComputer();
-            var playerType2 = BuildPlayerTypeAsComputer();
-
-            EqualityTests.TestEqualObjects(playerType1, playerType2);
-        }
-
-        [Fact]
-        public void Equal_ComputersWithDifferentNameAreNotEqual()
-        {
-            var playerType1 = BuildPlayerTypeAsComputer("Computer 1");
-            var playerType2 = BuildPlayerTypeAsComputer("Computer 2");
-
-            EqualityTests.TestUnequalObjects(playerType1, playerType2);
-        }
-
-        [Fact]
-        public void Equal_ComputersWithDifferentSymbolAreNotEqual()
-        {
-            var playerType1 = BuildPlayerTypeAsComputer(symbol: "Symbol 1");
-            var playerType2 = BuildPlayerTypeAsComputer(symbol: "Symbol 2");
-
-            EqualityTests.TestUnequalObjects(playerType1, playerType2);
-        }
-
-        [Fact]
-        public void Equal_ComputerCompareWithNull()
-        {
-            var playerType1 = BuildPlayerTypeAsComputer();
-
-            EqualityTests.TestAgainstNull(playerType1);
-        }
 
         private static PlayerType BuildPlayerTypeAsHuman(string name = null, string symbol = null) {
             name = name ?? "Human Name";

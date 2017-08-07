@@ -9,11 +9,7 @@ namespace TicTacToe.Core.Player {
         }
 
         public static IPlayerType As() => new PlayerType(StatusRepresentation.None, new UnknownPlayer());
-
-        public static bool operator ==(PlayerType a, PlayerType b) => ReferenceEquals(a, null) && ReferenceEquals(b, null) || !ReferenceEquals(a, null) && a.Equals(b);
-
-        public static bool operator !=(PlayerType a, PlayerType b) => !(a == b);
-
+       
         private StatusRepresentation Representation { get; }
 
         public IPlayer Player { get; }
@@ -22,15 +18,34 @@ namespace TicTacToe.Core.Player {
             Representation = represenation;
             Player = player;
         }
-
-        public bool Equals(PlayerType other) => other != null && Representation == other.Representation && Player.Equals(other.Player);
-
+        
         public PlayerType Human(string name, string symbol) => new PlayerType(StatusRepresentation.Human, new HumanPlayer(name, symbol));
 
-        public PlayerType Computer(string name, string symbol) => new PlayerType(StatusRepresentation.Computer, new ComputerPlayer(name, symbol));        
+        public PlayerType Computer(string name, string symbol) => new PlayerType(StatusRepresentation.Computer, new ComputerPlayer(name, symbol));
 
-        public override bool Equals(object obj) => Equals(obj as PlayerType);
+        public bool Equals(PlayerType other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Representation.Equals(other.Representation) && Player.Equals(other.Player);
+        }
 
-        public override int GetHashCode() => Representation.GetHashCode();
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals((PlayerType)obj);
+        }
+
+        public override int GetHashCode() => Representation.GetHashCode() * Player.GetHashCode();
+
+        public static bool operator ==(PlayerType a, PlayerType b)
+        {
+            if (ReferenceEquals(a, null))
+                return ReferenceEquals(b, null);
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(PlayerType a, PlayerType b) => !(a == b);
     }
 }

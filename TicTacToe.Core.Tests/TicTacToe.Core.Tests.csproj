@@ -56,6 +56,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Board\Service\BoardServiceTest.cs" />
+    <Compile Include="Game\Board\TicTacToeBoardTest.cs" />
     <Compile Include="Game\Board\Tile\Coordinate\NoCoordinateTest.cs" />
     <Compile Include="Game\Board\Tile\Coordinate\AvailableCoordinateTest.cs" />
     <Compile Include="Game\Board\Tile\EmptyTileTest.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Game\Builder\GameBuilderTest.cs" />
     <Compile Include="Game\Builder\InspectorGameVisitor.cs" />
     <Compile Include="Game\Builder\StartingPlayerMapperTest.cs" />
+    <Compile Include="Game\Service\GameServiceTest.cs" />
     <Compile Include="Game\States\PlayAgainGameStateTest.cs" />
     <Compile Include="Game\States\InitializeGameStateTest.cs" />
     <Compile Include="Game\States\CheckForWinGameStateTest.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="Game\States\StartGameStateTest.cs" />
     <Compile Include="Game\States\PlayGameStateTest.cs" />
     <Compile Include="Game\States\OverGameStateTest.cs" />
+    <Compile Include="Game\TicTacToeGameTest.cs" />
     <Compile Include="Player\HumanPlayerTest.cs" />
     <Compile Include="Player\ComputerPlayerTest.cs" />
     <Compile Include="Player\PlayersTest.cs" />

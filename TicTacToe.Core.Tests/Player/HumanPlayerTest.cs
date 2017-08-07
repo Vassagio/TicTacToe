@@ -1,4 +1,7 @@
 ﻿using Test.Utilities;
+using Test.Utilities.ValueType;
+using TicTacToe.Core.Game.Board.Tile.Coordinate;
+using TicTacToe.Core.Mocks.Player;
 using TicTacToe.Core.Player;
 using Xunit;
 
@@ -28,38 +31,35 @@ namespace TicTacToe.Core.Tests.Player {
         }
 
         [Fact]
-        public void Equal_SameHumanAreEqual()
+        public void GetNextMove()
         {
-            var human1 = BuildHumanPlayer();
-            var human2 = BuildHumanPlayer();
+            var player = BuildHumanPlayer();
 
-            EqualityTests.TestEqualObjects(human1, human2);
+            var move = player.GetNextMove();
+
+            Assert.IsType<NoCoordinate>(move);
         }
 
         [Fact]
-        public void Equal_HumansWithDifferentNameAreNotEqual()
+        public void Equalalty_Tests()
         {
-            var human1 = BuildHumanPlayer("Human 1");
-            var human2 = BuildHumanPlayer("Human 2");
 
-            EqualityTests.TestUnequalObjects(human1, human2);
-        }
+            const string NAME = "Human 1";
+            const string DIFFERENT_NAME = "Human 2";
+            const string SYMBOL = "X";
+            const string DIFFERENT_SYMBOL = "O";
 
-        [Fact]
-        public void Equal_HumansWithDifferentSymbolAreNotEqual()
-        {
-            var human1 = BuildHumanPlayer(symbol: "Symbol 1");
-            var human2 = BuildHumanPlayer(symbol: "Symbol 2");
+            var player1 = BuildHumanPlayer(NAME, SYMBOL);
+            var player2 = BuildHumanPlayer(NAME, SYMBOL);
+            var player3 = BuildHumanPlayer(DIFFERENT_NAME, SYMBOL);
+            var player4 = BuildHumanPlayer(NAME, DIFFERENT_SYMBOL);            
 
-            EqualityTests.TestUnequalObjects(human1, human2);
-        }
-
-        [Fact]
-        public void Equal_HumanCompareWithNull()
-        {
-            var human1 = BuildHumanPlayer();
-
-            EqualityTests.TestAgainstNull(human1);
+            EqualityTests.For(player1)
+                         .EqualTo(player1)
+                         .EqualTo(player2)
+                         .NotEqualTo(player3, "different name")
+                         .NotEqualTo(player4, "different symbol")                         
+                         .Assert();
         }
 
         private static HumanPlayer BuildHumanPlayer(string name = null, string symbol = null) {

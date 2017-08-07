@@ -1,11 +1,8 @@
 ﻿namespace TicTacToe.Core.Game.Service {
-    internal interface IGameService {
+    public interface IGameService {
         bool HasWinner();
-    }
-
-    class GameService : IGameService {
-        public bool HasWinner() {
-            return false;
-        }
+        void MakeMove();
+        void SwitchPlayer();
+        bool PlayAgain();
     }
 }
