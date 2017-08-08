@@ -1,6 +1,7 @@
 ﻿using TicTacToe.Core.Game.Board;
 using TicTacToe.Core.Game.Board.Service;
 using TicTacToe.Core.Game.Service;
+using TicTacToe.Core.Game.States;
 using TicTacToe.Core.Player;
 
 namespace TicTacToe.Core.Game.Builder {
@@ -19,7 +20,7 @@ namespace TicTacToe.Core.Game.Builder {
 
         public TicTacToeGame Build() {
             var board = TicTacToeBoard.Initialize(_size, _boardService);
-            return new TicTacToeGame(board, _players, new GameService());
+            return new TicTacToeGame(board, new GameService(_players), new InitializeGameState());
         }
 
         public IGameBuilderSetFirstPlayer WithBoardSize(int size) {

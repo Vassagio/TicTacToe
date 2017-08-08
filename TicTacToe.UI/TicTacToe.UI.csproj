@@ -46,8 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="DisplayTile.cs" />
     <Compile Include="IApplication.cs" />
-    <Compile Include="PrintBoardVisitor.cs" />
+    <Compile Include="DisplayBoardVisitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Project.Utilities\Project.Utilities.csproj">
+      <Project>{447FB026-DDC1-4181-A7D5-2788A75155DE}</Project>
+      <Name>Project.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TicTacToe.Core\TicTacToe.Core.csproj">
       <Project>{7caf2a06-ea4f-49ee-8dad-d3770df81f14}</Project>
       <Name>TicTacToe.Core</Name>

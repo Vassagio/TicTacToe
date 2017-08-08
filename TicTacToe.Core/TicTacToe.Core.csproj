@@ -48,6 +48,7 @@
     <Compile Include="Game\Builder\IGameBuilderSetSize.cs" />
     <Compile Include="Game\Builder\IStartingPlayerMapper.cs" />
     <Compile Include="Game\Builder\StartingPlayerMapper.cs" />
+    <Compile Include="Game\Service\GameService.cs" />
     <Compile Include="Game\TicTacToeGame.cs" />
     <Compile Include="Game\States\CheckForWinGameState.cs" />
     <Compile Include="Game\States\EndGameState.cs" />
@@ -90,6 +91,9 @@
       <Project>{447fb026-ddc1-4181-a7d5-2788a75155de}</Project>
       <Name>Project.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

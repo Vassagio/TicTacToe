@@ -5,6 +5,6 @@ namespace TicTacToe.Core.Game.Board.Service
 {
     public interface IBoardService
     {        
-        IEnumerable<EmptyTile> GenerateEmptyTilesWithAvailableCoordinates(int size);
+        IEnumerable<ITile> GenerateTilesWithCoordinates(int size);
     }
 }

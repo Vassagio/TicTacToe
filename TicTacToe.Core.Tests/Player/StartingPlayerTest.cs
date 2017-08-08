@@ -1,4 +1,4 @@
-﻿using Test.Utilities;
+﻿using Test.Utilities.ValueType;
 using TicTacToe.Core.Player;
 using Xunit;
 
@@ -7,57 +7,35 @@ namespace TicTacToe.Core.Tests.Player
     public class StartingPlayerTest
     {
 
+
         [Fact]
-        public void Equal_SameFirstPlayerAreEqual()
+        public void First_Player_Equalalty_Tests()
         {
-            var firstPlayer1 = BuildStartingPlayerAsFirstPlayer();
-            var firstPlayer2 = BuildStartingPlayerAsFirstPlayer();
+            var player1 = BuildStartingPlayerAsFirstPlayer();
+            var player2 = BuildStartingPlayerAsFirstPlayer();
+            var player3 = BuildStartingPlayerAsSecondPlayer();            
 
-            EqualityTests.TestEqualObjects(firstPlayer1, firstPlayer2);
+            EqualityTests.For(player1)
+                         .EqualTo(player1)
+                         .EqualTo(player2)
+                         .NotEqualTo(player3, "different first player type")                         
+                         .Assert();
         }
 
         [Fact]
-        public void Equal_FirstPlayerCompareWithNull()
+        public void Second_Player_Equalalty_Tests()
         {
-            var firstPlayer = BuildStartingPlayerAsFirstPlayer();
+            var player1 = BuildStartingPlayerAsSecondPlayer();
+            var player2 = BuildStartingPlayerAsSecondPlayer();
+            var player3 = BuildStartingPlayerAsFirstPlayer();
 
-            EqualityTests.TestAgainstNull(firstPlayer);
+            EqualityTests.For(player1)
+                         .EqualTo(player1)
+                         .EqualTo(player2)
+                         .NotEqualTo(player3, "different second player type")
+                         .Assert();
         }
-
-        [Fact]
-        public void Equal_SameSecondPlayerAreEqual()
-        {
-            var secondPlayer1 = BuildStartingPlayerAsSecondPlayer();
-            var secondPlayer2 = BuildStartingPlayerAsSecondPlayer();
-
-            EqualityTests.TestEqualObjects(secondPlayer1, secondPlayer2);
-        }
-
-        [Fact]
-        public void Equal_SecondPlayerCompareWithNull()
-        {
-            var secondPlayer = BuildStartingPlayerAsSecondPlayer();
-
-            EqualityTests.TestAgainstNull(secondPlayer);
-        }
-
-        [Fact]
-        public void Equal_FirstPlayerNotEqualToSecondPlayer() {
-            var firstPlayer = BuildStartingPlayerAsFirstPlayer();
-            var secondPlayer = BuildStartingPlayerAsSecondPlayer();
-
-            EqualityTests.TestUnequalObjects(firstPlayer, secondPlayer);
-        }
-
-        [Fact]
-        public void Equal_SecondPlayerNotEqualToFirstPlayer()
-        {
-            var firstPlayer = BuildStartingPlayerAsFirstPlayer();
-            var secondPlayer = BuildStartingPlayerAsSecondPlayer();
-
-            EqualityTests.TestUnequalObjects(secondPlayer, firstPlayer);
-        }
-
+      
         private static StartingPlayer BuildStartingPlayerAsFirstPlayer() => StartingPlayer.As().FirstPlayer();
         private static StartingPlayer BuildStartingPlayerAsSecondPlayer() => StartingPlayer.As().SecondPlayer();
     }

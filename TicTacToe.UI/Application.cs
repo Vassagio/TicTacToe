@@ -26,13 +26,13 @@ namespace TicTacToe.UI {
                 .Build();
 
             do {
-                game.Accept(new PrintBoardVisitor());
+                game.Accept(new DisplayBoardVisitor());
                 game.Start();
                 game.Play();
                 game.CheckForWin();
                 game.SwitchPlayer();
                 game.Over();
-                game.NewGame();
+                game.PlayAgain();
                 game.End();
             } while (game.StillGoing);
         }

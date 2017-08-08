@@ -5,11 +5,9 @@ using TicTacToe.Core.Player;
 namespace TicTacToe.Core.Tests.Game.Builder {
     internal class InspectorGameVisitor : IGameVisitor {
         public IBoard Board { get; private set; }
-        public IPlayers Players { get; private set; }
 
-        public void Execute(IBoard board, IPlayers players) {
+        public void Execute(IBoard board) {
             Board = board;
-            Players = players;
         }
     }
 }

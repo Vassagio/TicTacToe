@@ -10,19 +10,21 @@ namespace TicTacToe.Core.Game.Board.Service
     {
         private IEnumerable<AvailableCoordinate> BuildCoordinateGrid(int size)
         {
-            var horizontals = Enumerable.Range(1, size).RepeatSequence(3);
-            var verticals = Enumerable.Range(1, size).Repeat(3);            
+            var horizontals = Enumerable.Range(1, size).RepeatSequence(size);
+            var verticals = Enumerable.Range(1, size).RepeatTerms(size);            
             return Enumerable.Zip(horizontals, verticals, (h, v) => new AvailableCoordinate(h, v));
         }
 
-        private IEnumerable<EmptyTile> BuildTileGrid(AvailableCoordinate[] coordinates)
+        private IEnumerable<ITile> BuildTileGrid(AvailableCoordinate[] coordinates)
         {
             var positions = Enumerable.Range(1, coordinates.Length);
             return Enumerable.Zip(positions, coordinates, (p, c) => new EmptyTile(p, c));
         }
 
-        public IEnumerable<EmptyTile> GenerateEmptyTilesWithAvailableCoordinates(int size)
+        public IEnumerable<ITile> GenerateTilesWithCoordinates(int size)
         {
+            if (size <= 0) return new List<ITile>();
+
             var coordinates = BuildCoordinateGrid(size);
             return BuildTileGrid(coordinates.ToArray());
         }

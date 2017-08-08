@@ -6,16 +6,16 @@ using TicTacToe.Core.Player;
 namespace TicTacToe.Core.Game.Board
 {
     public interface IBoard
-    {
-        ITile this[int index] { get; }
-
+    {        
         int Count { get; }
         int Size { get; }
 
         IEnumerator<ITile> GetEnumerator();
-        ITile GetTile(ICoordinate coordinate);
-        ITile GetTile(int position);
-        ITile GetTile(int x, int y);
-        TicTacToeBoard SetTile(ICoordinate coordinate, IPlayer currentPlayer);
+        ITile GetTileBy(ICoordinate coordinate);
+        ITile GetTileBy(int position);
+        ITile GetTileBy(int x, int y);
+        TicTacToeBoard ReserveTileBy(ICoordinate coordinate, IPlayer currentPlayer);
+        TicTacToeBoard ReserveTileBy(int x, int y, IPlayer currentPlayer);
+        TicTacToeBoard ReserveTileBy(int position, IPlayer currentPlayer);
     }
 }

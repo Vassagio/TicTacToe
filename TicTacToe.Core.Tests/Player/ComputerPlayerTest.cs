@@ -1,4 +1,6 @@
 ﻿using Test.Utilities;
+using Test.Utilities.ValueType;
+using TicTacToe.Core.Game.Board.Tile.Coordinate;
 using TicTacToe.Core.Player;
 using Xunit;
 
@@ -31,39 +33,37 @@ namespace TicTacToe.Core.Tests.Player
         }
 
         [Fact]
-        public void Equal_SameComputerAreEqual()
+        public void GetNextMove()
         {
-            var computer1 = BuildComputerPlayer();
-            var computer2 = BuildComputerPlayer();
+            var player = BuildComputerPlayer();
 
-            EqualityTests.TestEqualObjects(computer1, computer2);
+            var move = player.GetNextMove();
+
+            Assert.IsType<NoCoordinate>(move);
         }
 
         [Fact]
-        public void Equal_ComputersWithDifferentNameAreNotEqual()
+        public void Equalalty_Tests()
         {
-            var computer1 = BuildComputerPlayer("Computer 1");
-            var computer2 = BuildComputerPlayer("Computer 2");
 
-            EqualityTests.TestUnequalObjects(computer1, computer2);
-        }
+            const string NAME = "Computer 1";
+            const string DIFFERENT_NAME = "Computer 2";
+            const string SYMBOL = "X";
+            const string DIFFERENT_SYMBOL = "O";
 
-        [Fact]
-        public void Equal_ComputersWithDifferentSymbolAreNotEqual()
-        {
-            var computer1 = BuildComputerPlayer(symbol: "Symbol 1");
-            var computer2 = BuildComputerPlayer(symbol: "Symbol 2");
+            var player1 = BuildComputerPlayer(NAME, SYMBOL);
+            var player2 = BuildComputerPlayer(NAME, SYMBOL);
+            var player3 = BuildComputerPlayer(DIFFERENT_NAME, SYMBOL);
+            var player4 = BuildComputerPlayer(NAME, DIFFERENT_SYMBOL);
 
-            EqualityTests.TestUnequalObjects(computer1, computer2);
-        }
+            EqualityTests.For(player1)
+                         .EqualTo(player1)
+                         .EqualTo(player2)
+                         .NotEqualTo(player3, "different name")
+                         .NotEqualTo(player4, "different symbol")
+                         .Assert();
+        }      
 
-        [Fact]
-        public void Equal_ComputerCompareWithNull()
-        {
-            var computer1 = BuildComputerPlayer();
-
-            EqualityTests.TestAgainstNull(computer1);
-        }
 
         private static ComputerPlayer BuildComputerPlayer(string name = null, string symbol = null) {
             name = name ?? "Computer";

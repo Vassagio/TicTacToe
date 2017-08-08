@@ -1,4 +1,5 @@
 ﻿using Test.Utilities;
+using Test.Utilities.ValueType;
 using TicTacToe.Core.Game.Board.Tile;
 using TicTacToe.Core.Game.Board.Tile.Coordinate;
 using TicTacToe.Core.Mocks.Game.Board.Tile.Coordinate;
@@ -56,40 +57,24 @@ namespace TicTacToe.Core.Tests.Game.Board.Tile
         }
 
         [Fact]
-        public void Equal_SameTilesAreEqual()
+        public void Equalalty_Tests()
         {
+            const int POSITION = 1;
+            const int DIFFERENT_POSITION = 2;
             var coordinate = new MockCoordinate();
-            var tile1 = BuildOccupiedTile(coordinate: coordinate);
-            var tile2 = BuildOccupiedTile(coordinate: coordinate);
+            var differentCoordinate = new MockCoordinate();
 
-            EqualityTests.TestEqualObjects(tile1, tile2);
-        }
+            var tile1 = BuildOccupiedTile(POSITION, coordinate);
+            var tile2 = BuildOccupiedTile(POSITION, coordinate);
+            var tile3 = BuildOccupiedTile(DIFFERENT_POSITION, coordinate);
+            var tile4 = BuildOccupiedTile(POSITION, differentCoordinate);
 
-        [Fact]
-        public void Equal_TilesWithDifferentPositionsAreNotEqual()
-        {
-            var coordinate = new MockCoordinate();
-            var tile1 = BuildOccupiedTile(1, coordinate);
-            var tile2 = BuildOccupiedTile(2, coordinate);
-
-            EqualityTests.TestUnequalObjects(tile1, tile2);
-        }
-
-        [Fact]
-        public void Equal_TilesWithDifferentCoordinatesAreNotEqual()
-        {
-            var tile1 = BuildOccupiedTile(coordinate: new MockCoordinate());
-            var tile2 = BuildOccupiedTile(coordinate: new MockCoordinate());
-
-            EqualityTests.TestUnequalObjects(tile1, tile2);
-        }
-
-        [Fact]
-        public void Equal_ComputerCompareWithNull()
-        {
-            var tile1 = BuildOccupiedTile();
-
-            EqualityTests.TestAgainstNull(tile1);
+            EqualityTests.For(tile1)
+                         .EqualTo(tile1)
+                         .EqualTo(tile2)
+                         .NotEqualTo(tile3, "different position")
+                         .NotEqualTo(tile4, "different coordinate")                         
+                         .Assert();
         }
 
         private static OccupiedTile BuildOccupiedTile(int? position = null, ICoordinate coordinate = null)

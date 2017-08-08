@@ -13,23 +13,37 @@ namespace TicTacToe.Core.Player
 
         public static IStartingPlayer As() => new StartingPlayer(StatusRepresentation.None);
 
-        public static bool operator ==(StartingPlayer a, StartingPlayer b) => ReferenceEquals(a, null) && ReferenceEquals(b, null) || !ReferenceEquals(a, null) && a.Equals(b);
-
-        public static bool operator !=(StartingPlayer a, StartingPlayer b) => !(a == b);
-
         private StatusRepresentation Representation { get; }
 
         private StartingPlayer(StatusRepresentation represenation) => Representation = represenation;
-
-        public bool Equals(StartingPlayer other) => other != null && Representation == other.Representation;
 
         public StartingPlayer FirstPlayer() => new StartingPlayer(StatusRepresentation.FirstPlayer);
 
         public StartingPlayer SecondPlayer() => new StartingPlayer(StatusRepresentation.SecondPlayer);
 
-        public override bool Equals(object obj) => Equals(obj as StartingPlayer);
+        public bool Equals(StartingPlayer other) {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Representation.Equals(other.Representation);
+        }
 
-        public override int GetHashCode() => (int)Representation;
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals((StartingPlayer)obj);
+        }
+
+        public override int GetHashCode() => Representation.GetHashCode();
+
+        public static bool operator ==(StartingPlayer a, StartingPlayer b)
+        {
+            if (ReferenceEquals(a, null))
+                return ReferenceEquals(b, null);
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(StartingPlayer a, StartingPlayer b) => !(a == b);
     }
 }
 

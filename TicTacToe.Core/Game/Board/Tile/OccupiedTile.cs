@@ -18,13 +18,28 @@ namespace TicTacToe.Core.Game.Board.Tile {
             Player = player
         };
 
-        public bool Equals(OccupiedTile other) => other != null && Position == other.Position && Equals(Coordinate, other.Coordinate);
+        public bool Equals(OccupiedTile other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Position.Equals(other.Position) && Coordinate.Equals(other.Coordinate);
+        }
 
-        public override bool Equals(object obj) => !ReferenceEquals(obj, null) && Equals(obj as OccupiedTile);
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return Equals((OccupiedTile)obj);
+        }
 
-        public override int GetHashCode() => (Position.GetHashCode() * 397) ^ (Coordinate.GetHashCode() * 397);
+        public override int GetHashCode() => Position.GetHashCode() ^ Coordinate.GetHashCode();
 
-        public static bool operator ==(OccupiedTile a, OccupiedTile b) => ReferenceEquals(a, null) && ReferenceEquals(b, null) || !ReferenceEquals(a, null) && a.Equals(b);
+        public static bool operator ==(OccupiedTile a, OccupiedTile b)
+        {
+            if (ReferenceEquals(a, null))
+                return ReferenceEquals(b, null);
+            return a.Equals(b);
+        }
 
         public static bool operator !=(OccupiedTile a, OccupiedTile b) => !(a == b);
     }

@@ -55,13 +55,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EqualityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateHelper\IStateAnd.cs" />
     <Compile Include="StateHelper\IStateTransition.cs" />
     <Compile Include="StateHelper\IStateWhen.cs" />
     <Compile Include="StateHelper\State.cs" />
     <Compile Include="StateHelper\StateTests.cs" />
+    <Compile Include="ValueType\EqualityTests.cs" />
+    <Compile Include="ValueType\Equality\EqualityTester.cs" />
+    <Compile Include="ValueType\Equality\MethodExtensions.cs" />
+    <Compile Include="ValueType\Equality\Rules\GetHashCodeEqualReturns.cs" />
+    <Compile Include="ValueType\Equality\Rules\ImplementsIEquatable.cs" />
+    <Compile Include="ValueType\Equality\Rules\ImplementsMethod.cs" />
+    <Compile Include="ValueType\Equality\Rules\IsTypeSealed.cs" />
+    <Compile Include="ValueType\Equality\Rules\ITestRule.cs" />
+    <Compile Include="ValueType\Equality\Rules\MethodReturns.cs" />
+    <Compile Include="ValueType\Equality\Rules\OverloadsEqualityOperator.cs" />
+    <Compile Include="ValueType\Equality\Rules\OverloadsInequalityOperator.cs" />
+    <Compile Include="ValueType\Equality\Rules\OverridesEquals.cs" />
+    <Compile Include="ValueType\Equality\Rules\OverridesGetHashCode.cs" />
+    <Compile Include="ValueType\Equality\TypeAnalysis.cs" />
+    <Compile Include="ValueType\Equality\ValueSemanticException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -75,6 +89,7 @@
       <Name>Project.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
